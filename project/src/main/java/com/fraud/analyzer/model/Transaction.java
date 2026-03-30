@@ -2,30 +2,41 @@ package com.fraud.analyzer.model;
 
 public class Transaction {
 
-    public String txId;
+    public String transactionId;
     public String sourceId;
-    public String targetId;
+    public String destId;
     public double amount;
     public long timestamp;
-    public String location;
- 
-    
-    public Transaction(String txId, String sourceId, String targetId, double amount, long timestamp, String location)
-    {
-        this.txId = txId;
+
+    // 🌍 Coordinates
+    public double latitude;
+    public double longitude;
+
+    public Transaction(String transactionId,
+                       String sourceId,
+                       String destId,
+                       double amount,
+                       long timestamp,
+                       double latitude,
+                       double longitude) {
+
+        this.transactionId = transactionId;
         this.sourceId = sourceId;
-        this.targetId = targetId;
+        this.destId = destId;
         this.amount = amount;
         this.timestamp = timestamp;
-        this.location = location;
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 
     @Override
     public String toString() {
-        return "TXN[" + txId + "] " +
-                sourceId + " -> " + targetId +
-                " | ₹" + amount +
-                " | " + location +
-                " | " + timestamp;
+        return "TX[" +
+                "ID=" + transactionId +
+                ", " + sourceId + " -> " + destId +
+                ", ₹" + amount +
+                ", lat=" + latitude +
+                ", lon=" + longitude +
+                "]";
     }
 }
