@@ -16,7 +16,16 @@ public class Transaction {
         this.sourceId = sourceId;
         this.targetId = targetId;
         this.amount = amount;
-        this.timestamp = System.currentTimeMillis();
+        this.timestamp = timestamp;
         this.location = location;
+    }
+
+    @Override
+    public String toString() {
+        return "TXN[" + txId + "] " +
+                sourceId + " -> " + targetId +
+                " | ₹" + amount +
+                " | " + location +
+                " | " + timestamp;
     }
 }
