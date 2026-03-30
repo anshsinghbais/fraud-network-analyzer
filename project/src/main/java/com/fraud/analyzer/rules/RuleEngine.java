@@ -1,7 +1,11 @@
 package com.fraud.analyzer.rules;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import com.fraud.analyzer.model.Transaction;
-import java.util.*;
 
 public class RuleEngine {
     // Mapping accountID with historical data
@@ -19,7 +23,7 @@ public class RuleEngine {
         AccountMetaData stats = history.computeIfAbsent(tx.sourceId, k -> new AccountMetaData());
 
         // RULE 1: LARGE AMOUNT SPIKE (Last K Transactions)
-        if(stats.getRecentCount() >= 3){
+        if(stats.getRecentCount() >= 2){
             double avg = stats.getRecentAverage();
             if(tx.amount > (avg * SPIKE_FACTOR) && avg > 0){
                 reasons.add("AMOUNT_SPIKE");
@@ -27,7 +31,7 @@ public class RuleEngine {
         }
 
         // RULE 2: IMPOSSIBLE TRAVEL
-        if(!stats.hasLocation()){
+        if(stats.hasLocation()){
             long timeDiff = tx.timestamp - stats.getLastTimestamp();
             double distance = getDistance(stats.getLastLat(), stats.getLastLon(), tx.latitude, tx.longitude);
 

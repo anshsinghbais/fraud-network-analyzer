@@ -1,4 +1,6 @@
 com/fraud/analyzer/model/Transaction.class
 com/fraud/analyzer/Main.class
-com/fraud/analyzer/rules/AmountSpikeRule.class
+com/fraud/analyzer/generator/Logger.class
+com/fraud/analyzer/rules/RuleEngine.class
 com/fraud/analyzer/generator/TransactionStream.class
+com/fraud/analyzer/rules/AccountMetaData.class
