@@ -4,7 +4,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 public class AccountMetaData {
-    private Queue<Double> lastKTransaction = new LinkedList<>();
+    private final Queue<Double> lastKTransaction = new LinkedList<>();
     private double recentSum = 0;
     private static final int K = 6;
 

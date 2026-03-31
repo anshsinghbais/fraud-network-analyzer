@@ -11,16 +11,16 @@ public class RuleEngine {
     // Mapping accountID with historical data
     private final Map<String, AccountMetaData> history = new HashMap<>();
 
-    //thresholds (limits)
-    private static final double SPIKE_FACTOR = 5.0; //5x then average is suspicious
-    private static final long SPEES_THRESHOLD_MS = 1000 * 60 * 60; // 1 hour
+    // Thresholds (limits)
+    private static final double SPIKE_FACTOR = 5.0; // 5x then average is suspicious
+    private static final long SPEED_THRESHOLD_MS = 1000 * 60 * 60; // 1 hour
     private static final double MAX_AMOUNT_LIMIT = 50000;
 
     public List<String> calculateRisk(Transaction tx){
         List<String> reasons = new ArrayList<>();
         
         // Get user history
-        AccountMetaData stats = history.computeIfAbsent(tx.sourceId, k -> new AccountMetaData());
+        AccountMetaData stats = history.computeIfAbsent(tx.sourceAccountId, k -> new AccountMetaData());
 
         // RULE 1: LARGE AMOUNT SPIKE (Last K Transactions)
         if(stats.getRecentCount() >= 2){
@@ -35,18 +35,17 @@ public class RuleEngine {
             long timeDiff = tx.timestamp - stats.getLastTimestamp();
             double distance = getDistance(stats.getLastLat(), stats.getLastLon(), tx.latitude, tx.longitude);
 
-            if(distance > 500 && timeDiff < SPEES_THRESHOLD_MS){
+            if(distance > 500 && timeDiff < SPEED_THRESHOLD_MS){
                 reasons.add("IMPOSSIBLE_TRAVEL");
             }
-
         }
 
-        //RULE 3: ABSOLUTE HIGH LIMIT 
+        // RULE 3: ABSOLUTE HIGH LIMIT
         if(tx.amount > MAX_AMOUNT_LIMIT){
             reasons.add("HIGH_AMOUNT");
         }
 
-        //Update History 
+        // Update History
         stats.update(tx.amount, tx.latitude, tx.longitude, tx.timestamp);
         
         return reasons;
