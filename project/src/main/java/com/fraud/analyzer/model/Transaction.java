@@ -3,8 +3,8 @@ package com.fraud.analyzer.model;
 public class Transaction {
 
     public String transactionId;
-    public String sourceId;
-    public String destId;
+    public String sourceAccountId;
+    public String destAccountId;
     public double amount;
     public long timestamp;
 
@@ -13,16 +13,16 @@ public class Transaction {
     public double longitude;
 
     public Transaction(String transactionId,
-                       String sourceId,
-                       String destId,
+                       String sourceAccountId,
+                       String destAccountId,
                        double amount,
                        long timestamp,
                        double latitude,
                        double longitude) {
 
         this.transactionId = transactionId;
-        this.sourceId = sourceId;
-        this.destId = destId;
+        this.sourceAccountId = sourceAccountId;
+        this.destAccountId = destAccountId;
         this.amount = amount;
         this.timestamp = timestamp;
         this.latitude = latitude;
@@ -33,10 +33,20 @@ public class Transaction {
     public String toString() {
         return "TX[" +
                 "ID=" + transactionId +
-                ", " + sourceId + " -> " + destId +
+                ", " + sourceAccountId + " -> " + destAccountId +
                 ", ₹" + amount +
                 ", lat=" + latitude +
                 ", lon=" + longitude +
                 "]";
     }
+        public String getSourceAccountId() {
+            return sourceAccountId;
+    }
+
+        public String getDestAccountId() {
+            return destAccountId;
+        }
+        public long getTimestamp() {
+            return timestamp;
+        }
 }
